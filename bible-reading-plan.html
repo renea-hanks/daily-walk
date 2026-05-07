@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Daily Walk | 365 Bible Reading Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf7f2;
+    --parchment: #f0ead8;
+    --gold: #b8975a;
+    --gold-light: #d4b483;
+    --forest: #7a9e73;
+    --forest-light: #9ab894;
+    --sage: #cfe1c9;
+    --ink: #1a1a14;
+    --ink-mid: #4a4a3a;
+    --ink-light: #7a7a6a;
+    --checked-bg: #f0f6ee;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .hero {
+    background: #ffffff;
+    color: var(--ink);
+    text-align: center;
+    padding: 3rem 1.5rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid #e8e0d0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .hero-plant { margin-bottom: 0.25rem; text-align: center; display: block; }
+  .hero-plant img { width: min(340px, 75vw); height: auto; opacity: 0.95; display: block; margin: 0 auto; }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero-verse {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    background: var(--parchment);
+    border-bottom: 1px solid #e0d8c8;
+    padding: 1.2rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .progress-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    white-space: nowrap;
+  }
+  .progress-bar-outer {
+    flex: 1;
+    min-width: 120px;
+    height: 6px;
+    background: #ddd5c0;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-bar-inner {
+    height: 100%;
+    background: linear-gradient(90deg, #7a9e73, var(--gold));
+    border-radius: 3px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-count {
+    font-size: 0.75rem;
+    color: #5a7a54;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .reset-btn {
+    font-size: 0.7rem;
+    color: var(--ink-light);
+    background: none;
+    border: 1px solid #ccc5b0;
+    border-radius: 3px;
+    padding: 0.25rem 0.6rem;
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    transition: all 0.2s;
+  }
+  .reset-btn:hover { color: var(--ink); border-color: var(--ink-mid); }
+
+  /* INTRO */
+  .intro {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 1rem;
+    text-align: center;
+  }
+  .intro blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--forest);
+    line-height: 1.6;
+    border-left: 3px solid var(--gold);
+    text-align: left;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  .intro blockquote cite {
+    display: block;
+    font-size: 0.8rem;
+    font-style: normal;
+    font-family: 'Jost', sans-serif;
+    color: var(--ink-light);
+    margin-top: 0.4rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .how-to {
+    background: white;
+    border: 1px solid #e0d8c8;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: left;
+    font-size: 0.85rem;
+    color: var(--ink-mid);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+  .how-to h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--forest);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+  }
+  .how-to p { margin-bottom: 0.4rem; }
+
+  /* SECTION */
+  .section {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 1rem 3rem;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem 0.5rem 1rem;
+    border-bottom: 2px solid #9ab894;
+    margin-bottom: 0.25rem;
+  }
+  .section-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--forest);
+    flex: 1;
+  }
+  .section-progress {
+    font-size: 0.7rem;
+    color: var(--ink-light);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* DAY ROW */
+  .day-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.65rem 0.5rem;
+    border-bottom: 1px solid #ede7d8;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-radius: 4px;
+  }
+  .day-row:hover { background: #f5f0e8; }
+  .day-row.checked { background: var(--checked-bg); }
+
+  .checkbox {
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    border: 1.5px solid #b0a890;
+    border-radius: 3px;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    background: white;
+  }
+  .day-row.checked .checkbox {
+    background: var(--forest);
+    border-color: var(--forest);
+  }
+  .checkmark {
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.2s;
+    color: white;
+    font-size: 11px;
+    line-height: 1;
+  }
+  .day-row.checked .checkmark { opacity: 1; transform: scale(1); }
+
+  .day-text { flex: 1; }
+  .day-num {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.15rem;
+  }
+  .day-readings {
+    font-size: 0.82rem;
+    color: var(--ink-mid);
+    line-height: 1.5;
+  }
+  .day-row.checked .day-readings { color: var(--ink-light); text-decoration: line-through; text-decoration-color: #b0b0a0; }
+  .day-row.checked .day-num { color: var(--forest-light); }
+
+  /* MILESTONE */
+  .milestone {
+    background: linear-gradient(135deg, #b8d0b0 0%, var(--sage) 100%);
+    color: var(--ink);
+    border-radius: 8px;
+    padding: 2rem 1.5rem;
+    margin: 1.5rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #a8c8a0;
+  }
+  .milestone::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 80px;
+    height: 80px;
+    background: url('/mnt/user-data/uploads/Growth.png') center/contain no-repeat;
+    opacity: 0.15;
+  }
+  .milestone h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+    color: var(--ink);
+  }
+  .milestone p {
+    font-size: 0.88rem;
+    line-height: 1.8;
+    opacity: 0.85;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--ink-mid);
+  }
+
+  .final-milestone {
+    background: linear-gradient(135deg, #a8c8a0, #cfe1c9);
+    border: 2px solid var(--gold);
+  }
+  .final-milestone h3 { font-size: 1.8rem; }
+  .final-milestone .rare {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    color: var(--gold-light);
+    margin-top: 1rem;
+    font-style: normal;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.75rem;
+    color: var(--ink-light);
+    letter-spacing: 0.1em;
+    border-top: 1px solid #e0d8c8;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-plant"><img src="data:image/jpeg;base64,/9j/4QC8RXhpZgAASUkqAAgAAAAGABIBAwABAAAAAQAAABoBBQABAAAAVgAAABsBBQABAAAAXgAAACgBAwABAAAAAgAAABMCAwABAAAAAQAAAGmHBAABAAAAZgAAAAAAAABgAAAAAQAAAGAAAAABAAAABgAAkAcABAAAADAyMTABkQcABAAAAAECAwAAoAcABAAAADAxMDABoAMAAQAAAP//AAACoAQAAQAAACwBAAADoAQAAQAAAMgAAAAAAAAA/+EO22h0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8APD94cGFja2V0IGJlZ2luPSfvu78nIGlkPSdXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQnPz4KPHg6eG1wbWV0YSB4bWxuczp4PSdhZG9iZTpuczptZXRhLyc+CjxyZGY6UkRGIHhtbG5zOnJkZj0naHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyc+CgogPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9JycKICB4bWxuczpBdHRyaWI9J2h0dHA6Ly9ucy5hdHRyaWJ1dGlvbi5jb20vYWRzLzEuMC8nPgogIDxBdHRyaWI6QWRzPgogICA8cmRmOlNlcT4KICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0nUmVzb3VyY2UnPgogICAgIDxBdHRyaWI6Q3JlYXRlZD4yMDI2LTA1LTA3PC9BdHRyaWI6Q3JlYXRlZD4KICAgICA8QXR0cmliOkRhdGE+eyZxdW90O2RvYyZxdW90OzomcXVvdDtEQUhJOHhuUS1nSSZxdW90OywmcXVvdDt1c2VyJnF1b3Q7OiZxdW90O1VBQ2lLVjRXbFdnJnF1b3Q7LCZxdW90O2JyYW5kJnF1b3Q7OiZxdW90O1JlbmVhIEhhbmtzJiMzOTtzIHRlYW0mcXVvdDt9PC9BdHRyaWI6RGF0YT4KICAgICA8QXR0cmliOkV4dElkPmU4NGVhMWFhLTcwY2YtNGU4ZS1iZDEwLWRiNDY5NmEzOTc1YjwvQXR0cmliOkV4dElkPgogICAgIDxBdHRyaWI6RmJJZD41MjUyNjU5MTQxNzk1ODA8L0F0dHJpYjpGYklkPgogICAgIDxBdHRyaWI6VG91Y2hUeXBlPjI8L0F0dHJpYjpUb3VjaFR5cGU+CiAgICA8L3JkZjpsaT4KICAgPC9yZGY6U2VxPgogIDwvQXR0cmliOkFkcz4KIDwvcmRmOkRlc2NyaXB0aW9uPgoKIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PScnCiAgeG1sbnM6ZGM9J2h0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvJz4KICA8ZGM6dGl0bGU+CiAgIDxyZGY6QWx0PgogICAgPHJkZjpsaSB4bWw6bGFuZz0neC1kZWZhdWx0Jz5Hcm93dGggRGFpbHkgV2FsayAtIDE8L3JkZjpsaT4KICAgPC9yZGY6QWx0PgogIDwvZGM6dGl0bGU+CiA8L3JkZjpEZXNjcmlwdGlvbj4KCiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0nJwogIHhtbG5zOnBkZj0naHR0cDovL25zLmFkb2JlLmNvbS9wZGYvMS4zLyc+CiAgPHBkZjpBdXRob3I+UmVuZWEgSGFua3M8L3BkZjpBdXRob3I+CiA8L3JkZjpEZXNjcmlwdGlvbj4KCiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0nJwogIHhtbG5zOnhtcD0naHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyc+CiAgPHhtcDpDcmVhdG9yVG9vbD5DYW52YSBkb2M9REFISTh4blEtZ0kgdXNlcj1VQUNpS1Y0V2xXZyBicmFuZD1SZW5lYSBIYW5rcyYjMzk7cyB0ZWFtPC94bXA6Q3JlYXRvclRvb2w+CiA8L3JkZjpEZXNjcmlwdGlvbj4KPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKPD94cGFja2V0IGVuZD0ndyc/Pv/bAEMAAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAf/bAEMBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAf/AABEIAMgBLAMBEQACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAfAQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNk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nQTaXITwk+uWum+D/FXg2PRG01rfxxeeLdd1h/NuYRcAGX4q/Ze+KurwfZ9N1mxtbiy+If7XnjKx1uP4meOtM1b/AIvXoviYfC9rO9s9Pm1PR18N6lrum2GtaTZahFpmjwaCuraPDqzzR6aoB93+ELXXrHwn4Ys/FN1DfeJrTw9olt4hvbeZrm3u9dt9MtYdXuYLh7WyeeG41FLmaKZ7O0aVHV2trcsYkAOioAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA/9k=" alt="Growth"></div>
+  <h1>The Daily Walk<br><em>365 Bible Reading Plan</em></h1>
+  <p class="hero-verse">Your word is a lamp to my feet and a light to my path — Psalm 119:105</p>
+</div>
+
+<div class="progress-wrap">
+  <span class="progress-label">Progress</span>
+  <div class="progress-bar-outer"><div class="progress-bar-inner" id="progressBar"></div></div>
+  <span class="progress-count" id="progressCount">0 / 365 days</span>
+  <button class="reset-btn" onclick="resetAll()">Reset</button>
+</div>
+
+<div class="intro">
+  <blockquote>
+    Seek ye first the kingdom of God and His righteousness, and all these things will be added unto you.
+    <cite>— Matthew 6:33</cite>
+  </blockquote>
+  <div class="how-to">
+    <h3>How to Use This Plan</h3>
+    <p>Each day includes four readings: Old Testament history, a Gospel or Letter, a Psalm, and a Proverb.</p>
+    <p>Tap any day to mark it complete. Your progress saves automatically in your browser.</p>
+    <p>The plan is divided into 40-day segments — move at your own pace. Grace over perfection.</p>
+  </div>
+</div>
+
+<div id="planContainer"></div>
+
+<footer>New Christian Next Steps &nbsp;·&nbsp; The Daily Walk 365</footer>
+
+<script>
+const STORAGE_KEY = 'dailywalk365_v1';
+
+const plan = [
+  {
+    segment: "Days 1–40",
+    days: [
+      [1,"Gen. 1:1-2:25","Matt. 1:1-25","Ps. 1:1-6","Pr. 1:1-7"],
+      [2,"Gen. 3:1-4:26","Matt. 2:1-23","Ps. 2:1-6","Pr. 1:8-9"],
+      [3,"Gen. 5:1-6:22","Matt. 3:1-17","Ps. 2:7-12","Pr. 1:10-19"],
+      [4,"Gen. 7:1-8:22","Matt. 4:1-25","Ps. 3:1-4","Pr. 1:20-22"],
+      [5,"Gen. 9:1-10:32","Matt. 5:1-26","Ps. 3:5-8","Pr. 1:23-27"],
+      [6,"Gen. 11:1-12:20","Matt. 5:27-48","Ps. 4:1-3","Pr. 1:28-33"],
+      [7,"Gen. 13:1-14:24","Matt. 6:1-18","Ps. 4:4-8","Pr. 2:1-5"],
+      [8,"Gen. 15:1-16:16","Matt. 6:19-34","Ps. 5:1-7","Pr. 2:6-9"],
+      [9,"Gen. 17:1-18:33","Matt. 7:1-29","Ps. 5:8-12","Pr. 2:10-22"],
+      [10,"Gen. 19:1-20:18","Matt. 8:1-17","Ps. 6:1-5","Pr. 3:1-4"],
+      [11,"Gen. 21:1-22:24","Matt. 8:18-34","Ps. 6:6-10","Pr. 3:5-6"],
+      [12,"Gen. 23:1-24:67","Matt. 9:1-17","Ps. 7:1-5","Pr. 3:7-8"],
+      [13,"Gen. 25:1-26:35","Matt. 9:18-38","Ps. 7:6-8","Pr. 3:9-10"],
+      [14,"Gen. 27:1-28:22","Matt. 10:1-20","Ps. 7:9-17","Pr. 3:11-12"],
+      [15,"Gen. 29:1-30:43","Matt. 10:21-42","Ps. 8:1-5","Pr. 3:13-18"],
+      [16,"Gen. 31:1-32:32","Matt. 11:1-30","Ps. 8:6-9","Pr. 3:19-20"],
+      [17,"Gen. 33:1-34:31","Matt. 12:1-21","Ps. 9:1-5","Pr. 3:21-26"],
+      [18,"Gen. 35:1-36:43","Matt. 12:22-50","Ps. 9:6-10","Pr. 3:27-30"],
+      [19,"Gen. 37:1-38:30","Matt. 13:1-30","Ps. 9:11-20","Pr. 3:31-35"],
+      [20,"Gen. 39:1-40:23","Matt. 13:31-58","Ps. 10:1-11","Pr. 4:1-6"],
+      [21,"Gen. 41:1-42:38","Matt. 14:1-21","Ps. 10:12-18","Pr. 4:7-9"],
+      [22,"Gen. 43:1-44:34","Matt. 14:22-36","Ps. 11:1-7","Pr. 4:10-13"],
+      [23,"Gen. 45:1-46:34","Matt. 15:1-20","Ps. 12:1-8","Pr. 4:14-17"],
+      [24,"Gen. 47:1-48:22","Matt. 15:21-39","Ps. 13:1-6","Pr. 4:18-19"],
+      [25,"Gen. 49:1-50:26","Matt. 16:1-28","Ps. 14:1-7","Pr. 4:20-24"],
+      [26,"Ex. 1:1-2:25","Matt. 17:1-27","Ps. 15:1-5","Pr. 4:25-27"],
+      [27,"Ex. 3:1-4:31","Matt. 18:1-20","Ps. 16:1-6","Pr. 5:1-6"],
+      [28,"Ex. 5:1-6:30","Matt. 18:21-35","Ps. 16:7-11","Pr. 5:7-14"],
+      [29,"Ex. 7:1-8:32","Matt. 19:1-30","Ps. 17:1-7","Pr. 5:15-20"],
+      [30,"Ex. 9:1-10:29","Matt. 20:1-16","Ps. 17:8-15","Pr. 5:21-23"],
+      [31,"Ex. 11:1-12:51","Matt. 20:17-34","Ps. 18:1-12","Pr. 6:1-5"],
+      [32,"Ex. 13:1-14:31","Matt. 21:1-22","Ps. 18:13-19","Pr. 6:6-11"],
+      [33,"Ex. 15:1-16:36","Matt. 21:23-46","Ps. 18:20-27","Pr. 6:12-15"],
+      [34,"Ex. 17:1-18:27","Matt. 22:1-22","Ps. 18:28-36","Pr. 6:16-19"],
+      [35,"Ex. 19:1-20:26","Matt. 22:23-46","Ps. 18:37-45","Pr. 6:20-25"],
+      [36,"Ex. 21:1-22:31","Matt. 23:1-22","Ps. 18:46-50","Pr. 6:26-29"],
+      [37,"Ex. 23:1-24:18","Matt. 23:23-39","Ps. 19:1-6","Pr. 6:30-31"],
+      [38,"Ex. 25:1-26:37","Matt. 24:1-28","Ps. 19:7-14","Pr. 6:32-35"],
+      [39,"Ex. 27:1-28:43","Matt. 24:29-51","Ps. 20:1-5","Pr. 7:1-5"],
+      [40,"Ex. 29:1-30:38","Matt. 25:1-30","Ps. 20:6-9","Pr. 7:6-23"],
+    ],
+    milestone: {
+      title: "Day 40 Milestone",
+      text: "Through these 40 days, the Scriptures have revealed the heart of the Father who created you and the Savior who stepped into history to redeem you. May your identity be rooted in the Truth that you are fully known and deeply loved by Him."
+    }
+  },
+  {
+    segment: "Days 41–80",
+    days: [
+      [41,"Ex. 31:1-32:35","Matt. 25:31-46","Ps. 21:1-7","Pr. 7:24-27"],
+      [42,"Ex. 33:1-34:35","Matt. 26:1-25","Ps. 21:8-13","Pr. 8:1-5"],
+      [43,"Ex. 35:1-36:38","Matt. 26:26-50","Ps. 22:1-8","Pr. 8:6-11"],
+      [44,"Ex. 37:1-38:31","Matt. 26:51-75","Ps. 22:9-15","Pr. 8:12-21"],
+      [45,"Ex. 39:1-40:38","Matt. 27:1-26","Ps. 22:16-21","Pr. 8:22-31"],
+      [46,"Lev. 1:1-2:16","Matt. 27:27-54","Ps. 22:22-31","Pr. 8:32-36"],
+      [47,"Lev. 3:1-4:35","Matt. 27:55-66","Ps. 23:1-6","Pr. 9:1-6"],
+      [48,"Lev. 5:1-6:30","Matt. 28:1-20","Ps. 24:1-6","Pr. 9:7-9"],
+      [49,"Lev. 7:1-8:36","Mark 1:1-22","Ps. 24:7-10","Pr. 9:10-12"],
+      [50,"Lev. 9:1-10:20","Mark 1:23-45","Ps. 25:1-7","Pr. 9:13-18"],
+      [51,"Lev. 11:1-12:8","Mark 2:1-28","Ps. 25:8-15","Pr. 10:1-3"],
+      [52,"Lev. 13:1-59","Mark 3:1-19","Ps. 25:16-22","Pr. 10:4-5"],
+      [53,"Lev. 14:1-57","Mark 3:20-35","Ps. 26:1-5","Pr. 10:6-7"],
+      [54,"Lev. 15:1-16:34","Mark 4:1-20","Ps. 26:6-12","Pr. 10:8"],
+      [55,"Lev. 17:1-18:30","Mark 4:21-41","Ps. 27:1-3","Pr. 10:9"],
+      [56,"Lev. 19:1-20:27","Mark 5:1-20","Ps. 27:4-10","Pr. 10:10-12"],
+      [57,"Lev. 21:1-22:33","Mark 5:21-43","Ps. 27:11-14","Pr. 10:13-16"],
+      [58,"Lev. 23:1-24:23","Mark 6:1-29","Ps. 28:1-5","Pr. 10:17-18"],
+      [59,"Lev. 25:1-55","Mark 6:30-56","Ps. 28:6-9","Pr. 10:19-21"],
+      [60,"Lev. 26:1-27:34","Mark 7:1-13","Ps. 29:1-6","Pr. 10:22-25"],
+      [61,"Num. 1:1-2:34","Mark 7:14-37","Ps. 29:7-11","Pr. 10:26-29"],
+      [62,"Num. 3:1-4:49","Mark 8:1-21","Ps. 30:1-7","Pr. 10:30-32"],
+      [63,"Num. 5:1-6:27","Mark 8:22-38","Ps. 30:8-12","Pr. 11:1-3"],
+      [64,"Num. 7:1-8:26","Mark 9:1-29","Ps. 31:1-5","Pr. 11:4-6"],
+      [65,"Num. 9:1-10:36","Mark 9:30-50","Ps. 31:6-14","Pr. 11:7-11"],
+      [66,"Num. 11:1-12:16","Mark 10:1-31","Ps. 31:15-18","Pr. 11:12-14"],
+      [67,"Num. 13:1-14:45","Mark 10:32-52","Ps. 31:19-24","Pr. 11:15"],
+      [68,"Num. 15:1-16:50","Mark 11:1-19","Ps. 32:1-5","Pr. 11:16-18"],
+      [69,"Num. 17:1-18:32","Mark 11:20-33","Ps. 32:6-11","Pr. 11:19-21"],
+      [70,"Num. 19:1-20:29","Mark 12:1-27","Ps. 33:1-9","Pr. 11:22-24"],
+      [71,"Num. 21:1-22:41","Mark 12:28-44","Ps. 33:10-17","Pr. 11:25-26"],
+      [72,"Num. 23:1-24:25","Mark 13:1-20","Ps. 33:18-22","Pr. 11:27"],
+      [73,"Num. 25:1-26:65","Mark 13:21-37","Ps. 34:1-7","Pr. 11:28"],
+      [74,"Num. 27:1-28:31","Mark 14:1-26","Ps. 34:8-14","Pr. 11:29"],
+      [75,"Num. 29:1-30:16","Mark 14:27-54","Ps. 34:15-22","Pr. 11:30-31"],
+      [76,"Num. 31:1-32:42","Mark 14:55-72","Ps. 35:1-8","Pr. 12:1"],
+      [77,"Num. 33:1-34:29","Mark 15:1-24","Ps. 35:9-16","Pr. 12:2"],
+      [78,"Num. 35:1-36:13","Mark 15:25-47","Ps. 35:17-28","Pr. 12:3"],
+      [79,"Deut. 1:1-2:37","Mark 16:1-20","Ps. 36:1-6","Pr. 12:4-6"],
+      [80,"Deut. 3:1-4:49","Luke 1:1-20","Ps. 36:7-12","Pr. 12:7"],
+    ],
+    milestone: {
+      title: "Day 80 Milestone",
+      text: "In the readings from the Law and the Gospels, you have seen the holiness of God and discovered the invitation of Jesus to follow Him. Being a disciple is a relationship of listening to His voice, obeying Him, and finding your rest in His finished work."
+    }
+  },
+  {
+    segment: "Days 81–120",
+    days: [
+      [81,"Deut. 5:1-6:25","Luke 1:21-38","Ps. 37:1-4","Pr. 12:8"],
+      [82,"Deut. 7:1-8:20","Luke 1:39-56","Ps. 37:5-11","Pr. 12:9-10"],
+      [83,"Deut. 9:1-10:22","Luke 1:57-80","Ps. 37:12-17","Pr. 12:11"],
+      [84,"Deut. 11:1-12:32","Luke 2:1-24","Ps. 37:18-22","Pr. 12:12-14"],
+      [85,"Deut. 13:1-14:29","Luke 2:25-52","Ps. 37:23-29","Pr. 12:15-16"],
+      [86,"Deut. 15:1-16:22","Luke 3:1-38","Ps. 37:30-36","Pr. 12:17-19"],
+      [87,"Deut. 17:1-18:22","Luke 4:1-30","Ps. 37:37-40","Pr. 12:20-22"],
+      [88,"Deut. 19:1-20:20","Luke 4:31-44","Ps. 38:1-8","Pr. 12:23-25"],
+      [89,"Deut. 21:1-22:30","Luke 5:1-16","Ps. 38:9-22","Pr. 12:26-28"],
+      [90,"Deut. 23:1-24:22","Luke 5:17-39","Ps. 39:1-6","Pr. 13:1-3"],
+      [91,"Deut. 25:1-26:19","Luke 6:1-26","Ps. 39:7-11","Pr. 13:4-6"],
+      [92,"Deut. 27:1-28:68","Luke 6:27-49","Ps. 39:12-13","Pr. 13:7-8"],
+      [93,"Deut. 29:1-30:20","Luke 7:1-30","Ps. 40:1-5","Pr. 13:9-10"],
+      [94,"Deut. 31:1-32:52","Luke 7:31-50","Ps. 40:6-12","Pr. 13:11-12"],
+      [95,"Deut. 33:1-34:12","Luke 8:1-25","Ps. 40:13-17","Pr. 13:13-14"],
+      [96,"Josh. 1:1-2:24","Luke 8:26-56","Ps. 41:1-13","Pr. 13:15-16"],
+      [97,"Josh. 3:1-4:24","Luke 9:1-17","Ps. 42:1-5","Pr. 13:17-18"],
+      [98,"Josh. 5:1-6:27","Luke 9:18-36","Ps. 42:6-11","Pr. 13:19-21"],
+      [99,"Josh. 7:1-8:35","Luke 9:37-62","Ps. 43:1-5","Pr. 13:22-23"],
+      [100,"Josh. 9:1-10:43","Luke 10:1-24","Ps. 44:1-3","Pr. 13:24-25"],
+      [101,"Josh. 11:1-12:24","Luke 10:25-42","Ps. 44:4-19","Pr. 14:1-2"],
+      [102,"Josh. 13:1-14:15","Luke 11:1-28","Ps. 44:20-26","Pr. 14:3"],
+      [103,"Josh. 15:1-16:10","Luke 11:29-54","Ps. 45:1-5","Pr. 14:4-5"],
+      [104,"Josh. 17:1-18:28","Luke 12:1-31","Ps. 45:6-17","Pr. 14:6"],
+      [105,"Josh. 19:1-20:9","Luke 12:32-59","Ps. 46:1-6","Pr. 14:7-11"],
+      [106,"Josh. 21:1-22:34","Luke 13:1-22","Ps. 46:7-11","Pr. 14:12-13"],
+      [107,"Josh. 23:1-24:33","Luke 13:23-35","Ps. 47:1-9","Pr. 14:14"],
+      [108,"Judg. 1:1-2:23","Luke 14:1-24","Ps. 48:1-8","Pr. 14:15-17"],
+      [109,"Judg. 3:1-4:24","Luke 14:25-35","Ps. 48:9-14","Pr. 14:18-19"],
+      [110,"Judg. 5:1-6:40","Luke 15:1-10","Ps. 49:1-9","Pr. 14:20-21"],
+      [111,"Judg. 7:1-8:35","Luke 15:11-32","Ps. 49:10-20","Pr. 14:22-24"],
+      [112,"Judg. 9:1-10:18","Luke 16:1-31","Ps. 50:1-6","Pr. 14:25-27"],
+      [113,"Judg. 11:1-12:15","Luke 17:1-19","Ps. 50:7-15","Pr. 14:28"],
+      [114,"Judg. 13:1-14:20","Luke 17:20-37","Ps. 50:16-23","Pr. 14:29-30"],
+      [115,"Judg. 15:1-16:31","Luke 18:1-23","Ps. 51:1-6","Pr. 14:31-32"],
+      [116,"Judg. 17:1-19:30","Luke 18:24-43","Ps. 51:7-11","Pr. 14:33-35"],
+      [117,"Judg. 20:1-21:25","Luke 19:1-27","Ps. 51:12-19","Pr. 15:1-3"],
+      [118,"Ruth 1:1-2:23","Luke 19:28-48","Ps. 52:1-5","Pr. 15:4-5"],
+      [119,"Ruth 3:1-4:22","Luke 20:1-26","Ps. 52:6-9","Pr. 15:6-7"],
+      [120,"1 Sam. 1:1-3:21","Luke 20:27-47","Ps. 53:1-6","Pr. 15:8-11"],
+    ],
+    milestone: {
+      title: "Day 120 Milestone",
+      text: "As you have seen God's faithfulness through the history of His people and the life of Christ, may you be reminded that He is the one who sustains you. Your life is hidden with Christ in God."
+    }
+  },
+  {
+    segment: "Days 121–160",
+    days: [
+      [121,"1 Sam. 4:1-5:12","Luke 21:1-19","Ps. 54:1-7","Pr. 15:12-13"],
+      [122,"1 Sam. 6:1-7:17","Luke 21:20-38","Ps. 55:1-8","Pr. 15:14"],
+      [123,"1 Sam. 8:1-9:27","Luke 22:1-23","Ps. 55:9-15","Pr. 15:15-17"],
+      [124,"1 Sam. 10:1-11:15","Luke 22:24-46","Ps. 55:16-23","Pr. 15:18-20"],
+      [125,"1 Sam. 12:1-13:23","Luke 22:47-71","Ps. 56:1-13","Pr. 15:21-23"],
+      [126,"1 Sam. 14:1-15:35","Luke 23:1-25","Ps. 57:1-3","Pr. 15:24-25"],
+      [127,"1 Sam. 16:1-17:58","Luke 23:26-56","Ps. 57:4-11","Pr. 15:26"],
+      [128,"1 Sam. 18:1-19:24","Luke 24:1-35","Ps. 58:1-11","Pr. 15:27-30"],
+      [129,"1 Sam. 20:1-21:15","Luke 24:36-53","Ps. 59:1-5","Pr. 15:31-33"],
+      [130,"1 Sam. 22:1-23:29","John 1:1-28","Ps. 59:6-17","Pr. 16:1-2"],
+      [131,"1 Sam. 24:1-25:44","John 1:29-51","Ps. 60:1-5","Pr. 16:3"],
+      [132,"1 Sam. 26:1-27:12","John 2:1-25","Ps. 60:6-12","Pr. 16:4-5"],
+      [133,"1 Sam. 28:1-25","John 3:1-18","Ps. 61:1-4","Pr. 16:6"],
+      [134,"1 Sam. 29:1-31:13","John 3:19-36","Ps. 61:5-8","Pr. 16:7-9"],
+      [135,"2 Sam. 1:1-2:32","John 4:1-30","Ps. 62:1-4","Pr. 16:10-12"],
+      [136,"2 Sam. 3:1-4:12","John 4:31-54","Ps. 62:5-12","Pr. 16:13-15"],
+      [137,"2 Sam. 5:1-6:23","John 5:1-23","Ps. 63:1-11","Pr. 16:16-17"],
+      [138,"2 Sam. 7:1-8:18","John 5:24-47","Ps. 64:1-10","Pr. 16:18-19"],
+      [139,"2 Sam. 9:1-10:19","John 6:1-21","Ps. 65:1-8","Pr. 16:20-21"],
+      [140,"2 Sam. 11:1-12:31","John 6:22-51","Ps. 65:9-13","Pr. 16:22-24"],
+      [141,"2 Sam. 13:1-14:33","John 6:52-71","Ps. 66:1-7","Pr. 16:25-26"],
+      [142,"2 Sam. 15:1-16:23","John 7:1-27","Ps. 66:8-15","Pr. 16:27-30"],
+      [143,"2 Sam. 17:1-18:33","John 7:28-53","Ps. 66:16-20","Pr. 16:31-32"],
+      [144,"2 Sam. 19:1-20:26","John 8:1-27","Ps. 67:1-7","Pr. 16:33-17:1"],
+      [145,"2 Sam. 21:1-22:51","John 8:28-59","Ps. 68:1-6","Pr. 17:2-4"],
+      [146,"2 Sam. 23:1-24:25","John 9:1-23","Ps. 68:7-10","Pr. 17:5-6"],
+      [147,"1 Kin. 1:1-2:46","John 9:24-41","Ps. 68:11-14","Pr. 17:7-9"],
+      [148,"1 Kin. 3:1-4:34","John 10:1-23","Ps. 68:15-20","Pr. 17:10-12"],
+      [149,"1 Kin. 5:1-6:38","John 10:24-42","Ps. 68:21-27","Pr. 17:13-15"],
+      [150,"1 Kin. 7:1-8:66","John 11:1-29","Ps. 68:28-35","Pr. 17:16-17"],
+      [151,"1 Kin. 9:1-10:29","John 11:30-57","Ps. 69:1-4","Pr. 17:18-19"],
+      [152,"1 Kin. 11:1-12:33","John 12:1-26","Ps. 69:5-15","Pr. 17:20-22"],
+      [153,"1 Kin. 13:1-14:31","John 12:27-50","Ps. 69:16-21","Pr. 17:23-24"],
+      [154,"1 Kin. 15:1-16:34","John 13:1-20","Ps. 69:22-28","Pr. 17:25-26"],
+      [155,"1 Kin. 17:1-18:46","John 13:21-38","Ps. 69:29-36","Pr. 17:27-28"],
+      [156,"1 Kin. 19:1-20:43","John 14:1-31","Ps. 70:1-5","Pr. 18:1-2"],
+      [157,"1 Kin. 21:1-22:53","John 15:1-27","Ps. 71:1-8","Pr. 18:3-5"],
+      [158,"2 Kin. 1:1-2:25","John 16:1-33","Ps. 71:9-16","Pr. 18:6-8"],
+      [159,"2 Kin. 3:1-4:44","John 17:1-26","Ps. 71:17-24","Pr. 18:9"],
+      [160,"2 Kin. 5:1-6:33","John 18:1-18","Ps. 72:1-7","Pr. 18:10-11"],
+    ],
+    milestone: {
+      title: "Day 160 Milestone",
+      text: "The Gospel of John has shown the intimacy Jesus desires with you, to abide in Him as a branch in the vine. You are chosen by Him to bear fruit that remains as you walk in your identity as His child."
+    }
+  },
+  {
+    segment: "Days 161–200",
+    days: [
+      [161,"2 Kin. 7:1-8:29","John 18:19-40","Ps. 72:8-16","Pr. 18:12-13"],
+      [162,"2 Kin. 9:1-10:36","John 19:1-22","Ps. 72:17-20","Pr. 18:14-15"],
+      [163,"2 Kin. 11:1-13:25","John 19:23-42","Ps. 73:1-9","Pr. 18:16-17"],
+      [164,"2 Kin. 14:1-29","John 20:1-31","Ps. 73:10-20","Pr. 18:18-19"],
+      [165,"2 Kin. 15:1-16:20","John 21:1-25","Ps. 73:21-28","Pr. 18:20-21"],
+      [166,"2 Kin. 17:1-18:37","Acts 1:1-26","Ps. 74:1-8","Pr. 18:22-24"],
+      [167,"2 Kin. 19:1-21:26","Acts 2:1-21","Ps. 74:9-17","Pr. 19:1-2"],
+      [168,"2 Kin. 22:1-24:20","Acts 2:22-47","Ps. 74:18-23","Pr. 19:3"],
+      [169,"2 Kin. 25:1-30","Acts 3:1-26","Ps. 75:1-10","Pr. 19:4-5"],
+      [170,"1 Chr. 1:1-2:55","Acts 4:1-22","Ps. 76:1-6","Pr. 19:6-7"],
+      [171,"1 Chr. 3:1-4:43","Acts 4:23-37","Ps. 76:7-12","Pr. 19:8-9"],
+      [172,"1 Chr. 5:1-6:81","Acts 5:1-21","Ps. 77:1-3","Pr. 19:10-12"],
+      [173,"1 Chr. 7:1-8:40","Acts 5:22-42","Ps. 77:4-9","Pr. 19:13-14"],
+      [174,"1 Chr. 9:1-10:14","Acts 6:1-15","Ps. 77:10-15","Pr. 19:15-16"],
+      [175,"1 Chr. 11:1-12:40","Acts 7:1-21","Ps. 77:16-20","Pr. 19:17-19"],
+      [176,"1 Chr. 13:1-14:17","Acts 7:22-43","Ps. 78:1-11","Pr. 19:20-21"],
+      [177,"1 Chr. 15:1-16:43","Acts 7:44-60","Ps. 78:12-16","Pr. 19:22-24"],
+      [178,"1 Chr. 17:1-18:17","Acts 8:1-25","Ps. 78:17-25","Pr. 19:25-26"],
+      [179,"1 Chr. 19:1-20:8","Acts 8:26-40","Ps. 78:26-33","Pr. 19:27-29"],
+      [180,"1 Chr. 21:1-22:19","Acts 9:1-21","Ps. 78:34-39","Pr. 20:1-2"],
+      [181,"1 Chr. 23:1-25:31","Acts 9:22-43","Ps. 78:40-55","Pr. 20:3"],
+      [182,"1 Chr. 26:1-27:34","Acts 10:1-23","Ps. 78:56-66","Pr. 20:4-5"],
+      [183,"1 Chr. 28:1-29:30","Acts 10:24-48","Ps. 78:67-72","Pr. 20:6-7"],
+      [184,"2 Chr. 1:1-2:18","Acts 11:1-30","Ps. 79:1-4","Pr. 20:8-9"],
+      [185,"2 Chr. 3:1-4:22","Acts 12:1-25","Ps. 79:5-10","Pr. 20:10-12"],
+      [186,"2 Chr. 5:1-6:42","Acts 13:1-25","Ps. 79:11-13","Pr. 20:13-14"],
+      [187,"2 Chr. 7:1-8:18","Acts 13:26-52","Ps. 80:1-6","Pr. 20:15"],
+      [188,"2 Chr. 9:1-10:19","Acts 14:1-28","Ps. 80:7-13","Pr. 20:16-18"],
+      [189,"2 Chr. 11:1-12:16","Acts 15:1-21","Ps. 80:14-19","Pr. 20:19-21"],
+      [190,"2 Chr. 13:1-14:15","Acts 15:22-41","Ps. 81:1-5","Pr. 20:22-23"],
+      [191,"2 Chr. 15:1-16:14","Acts 16:1-21","Ps. 81:6-10","Pr. 20:24-25"],
+      [192,"2 Chr. 17:1-18:34","Acts 16:22-40","Ps. 81:11-16","Pr. 20:26-28"],
+      [193,"2 Chr. 19:1-20:37","Acts 17:1-15","Ps. 82:1-8","Pr. 20:29-30"],
+      [194,"2 Chr. 21:1-22:12","Acts 17:16-34","Ps. 83:1-8","Pr. 21:1"],
+      [195,"2 Chr. 23:1-24:27","Acts 18:1-28","Ps. 83:9-18","Pr. 21:2-3"],
+      [196,"2 Chr. 25:1-27:9","Acts 19:1-20","Ps. 84:1-7","Pr. 21:4-5"],
+      [197,"2 Chr. 28:1-29:36","Acts 19:21-41","Ps. 84:8-12","Pr. 21:6-8"],
+      [198,"2 Chr. 30:1-31:21","Acts 20:1-16","Ps. 85:1-7","Pr. 21:9-11"],
+      [199,"2 Chr. 32:1-33:25","Acts 20:17-38","Ps. 85:8-13","Pr. 21:12"],
+      [200,"2 Chr. 34:1-36:23","Acts 21:1-17","Ps. 86:1-5","Pr. 21:13-14"],
+    ],
+    milestone: {
+      title: "Day 200 Milestone",
+      text: "Through the book of Acts and the history of Israel, the Scriptures have shown that God has always been at work to dwell with His people. You are a temple of the Holy Spirit, and your life is part of His unfolding story."
+    }
+  },
+  {
+    segment: "Days 201–240",
+    days: [
+      [201,"Ezra 1:1-2:70","Acts 21:18-40","Ps. 86:6-10","Pr. 21:15-16"],
+      [202,"Ezra 3:1-4:24","Acts 22:1-30","Ps. 86:11-17","Pr. 21:17-18"],
+      [203,"Ezra 5:1-6:22","Acts 23:1-15","Ps. 87:1-7","Pr. 21:19-20"],
+      [204,"Ezra 7:1-8:36","Acts 23:16-34","Ps. 88:1-5","Pr. 21:21-22"],
+      [205,"Ezra 9:1-10:44","Acts 24:1-27","Ps. 88:6-10","Pr. 21:23-24"],
+      [206,"Neh. 1:1-2:20","Acts 25:1-27","Ps. 88:11-18","Pr. 21:25-26"],
+      [207,"Neh. 3:1-5:19","Acts 26:1-32","Ps. 89:1-4","Pr. 21:27"],
+      [208,"Neh. 6:1-7:73","Acts 27:1-26","Ps. 89:5-10","Pr. 21:28"],
+      [209,"Neh. 8:1-9:38","Acts 27:27-44","Ps. 89:11-18","Pr. 21:29-31"],
+      [210,"Neh. 10:1-11:36","Acts 28:1-31","Ps. 89:19-29","Pr. 22:1-2"],
+      [211,"Neh. 12:1-13:31","Rom. 1:1-32","Ps. 89:30-37","Pr. 22:3-4"],
+      [212,"Esth. 1:1-2:23","Rom. 2:1-29","Ps. 89:38-45","Pr. 22:5-6"],
+      [213,"Esth. 3:1-4:17","Rom. 3:1-31","Ps. 89:46-52","Pr. 22:7-8"],
+      [214,"Esth. 5:1-6:14","Rom. 4:1-25","Ps. 90:1-5","Pr. 22:9"],
+      [215,"Esth. 7:1-8:17","Rom. 5:1-21","Ps. 90:7-17","Pr. 22:10-11"],
+      [216,"Esth. 9:1-10:3","Rom. 6:1-23","Ps. 91:1-6","Pr. 22:12"],
+      [217,"Job 1:1-2:13","Rom. 7:1-25","Ps. 91:7-13","Pr. 22:13-14"],
+      [218,"Job 3:1-4:21","Rom. 8:1-21","Ps. 91:14-16","Pr. 22:15"],
+      [219,"Job 5:1-6:30","Rom. 8:22-39","Ps. 92:1-7","Pr. 22:16"],
+      [220,"Job 7:1-8:22","Rom. 9:1-15","Ps. 92:8-15","Pr. 22:17-21"],
+      [221,"Job 9:1-10:22","Rom. 9:16-33","Ps. 93:1-5","Pr. 22:22-23"],
+      [222,"Job 11:1-12:25","Rom. 10:1-21","Ps. 94:1-11","Pr. 22:24-25"],
+      [223,"Job 13:1-14:22","Rom. 11:1-18","Ps. 94:12-19","Pr. 22:26-27"],
+      [224,"Job 15:1-16:22","Rom. 11:19-36","Ps. 94:20-23","Pr. 22:28-29"],
+      [225,"Job 17:1-18:21","Rom. 12:1-21","Ps. 95:1-5","Pr. 23:1-3"],
+      [226,"Job 19:1-20:29","Rom. 13:1-14","Ps. 95:6-11","Pr. 23:4-5"],
+      [227,"Job 21:1-22:30","Rom. 14:1-23","Ps. 96:1-6","Pr. 23:6-8"],
+      [228,"Job 23:1-25:6","Rom. 15:1-24","Ps. 96:7-10","Pr. 23:9"],
+      [229,"Job 26:1-14","Rom. 15:25-33","Ps. 96:11-13","Pr. 23:10-12"],
+      [230,"Job 27:1-28:28","Rom. 16:1-27","Ps. 97:1-6","Pr. 23:13-14"],
+      [231,"Job 29:1-30:31","1 Cor. 1:1-31","Ps. 97:7-12","Pr. 23:15-16"],
+      [232,"Job 31:1-32:22","1 Cor. 2:1-16","Ps. 98:1-3","Pr. 23:17-18"],
+      [233,"Job 33:1-34:37","1 Cor. 3:1-23","Ps. 98:4-9","Pr. 23:19-21"],
+      [234,"Job 35:1-36:33","1 Cor. 4:1-21","Ps. 99:1-9","Pr. 23:22-25"],
+      [235,"Job 37:1-38:41","1 Cor. 5:1-13","Ps. 100:1-5","Pr. 23:26-28"],
+      [236,"Job 39:1-40:24","1 Cor. 6:1-20","Ps. 101:1-4","Pr. 23:29-30"],
+      [237,"Job 41:1-42:17","1 Cor. 7:1-19","Ps. 101:5-8","Pr. 23:31-35"],
+      [238,"Eccl. 1:1-2:26","1 Cor. 7:20-40","Ps. 102:1-11","Pr. 24:1-2"],
+      [239,"Eccl. 3:1-22","1 Cor. 8:1-13","Ps. 102:12-17","Pr. 24:3-4"],
+      [240,"Eccl. 4:1-6:12","1 Cor. 9:1-27","Ps. 102:18-28","Pr. 24:5-6"],
+    ],
+    milestone: {
+      title: "Day 240 Milestone",
+      text: "Having read the wisdom of Job and the letters to the Romans and Corinthians, you have seen that Jesus is our wisdom and our righteousness. Your identity is not found in your own strength, but in the grace provided through Christ."
+    }
+  },
+  {
+    segment: "Days 241–280",
+    days: [
+      [241,"Eccl. 7:1-29","1 Cor. 10:1-18","Ps. 103:1-5","Pr. 24:7-9"],
+      [242,"Eccl. 8:1-10:20","1 Cor. 10:19-33","Ps. 103:6-14","Pr. 24:10-12"],
+      [243,"Eccl. 11:1-12:14","1 Cor. 11:1-16","Ps. 103:15-22","Pr. 24:13-14"],
+      [244,"Song 1:1-2:17","1 Cor. 11:17-34","Ps. 104:1-9","Pr. 24:15-16"],
+      [245,"Song 3:1-4:16","1 Cor. 12:1-31","Ps. 104:10-23","Pr. 24:17-18"],
+      [246,"Song 5:1-6:13","1 Cor. 13:1-13","Ps. 104:24-30","Pr. 24:19-20"],
+      [247,"Song 7:1-8:14","1 Cor. 14:1-20","Ps. 104:31-35","Pr. 24:21-22"],
+      [248,"Isa. 1:1-2:22","1 Cor. 14:21-40","Ps. 105:1-6","Pr. 24:23-25"],
+      [249,"Isa. 3:1-4:6","1 Cor. 15:1-28","Ps. 105:7-22","Pr. 24:26-27"],
+      [250,"Isa. 5:1-6:13","1 Cor. 15:29-58","Ps. 105:23-36","Pr. 24:28-29"],
+      [251,"Isa. 7:1-8:22","1 Cor. 16:1-24","Ps. 105:37-45","Pr. 24:30-34"],
+      [252,"Isa. 9:1-10:34","2 Cor. 1:1-24","Ps. 106:1-5","Pr. 25:1-2"],
+      [253,"Isa. 11:1-12:6","2 Cor. 2:1-17","Ps. 106:6-18","Pr. 25:3-5"],
+      [254,"Isa. 13:1-14:32","2 Cor. 3:1-18","Ps. 106:19-23","Pr. 25:6-7"],
+      [255,"Isa. 15:1-16:14","2 Cor. 4:1-18","Ps. 106:24-31","Pr. 25:8-10"],
+      [256,"Isa. 17:1-18:7","2 Cor. 5:1-21","Ps. 106:32-39","Pr. 25:11-12"],
+      [257,"Isa. 19:1-20:6","2 Cor. 6:1-18","Ps. 106:40-48","Pr. 25:13"],
+      [258,"Isa. 21:1-22:25","2 Cor. 7:1-16","Ps. 107:1-9","Pr. 25:14-16"],
+      [259,"Isa. 23:1-24:23","2 Cor. 8:1-24","Ps. 107:10-22","Pr. 25:17"],
+      [260,"Isa. 25:1-26:21","2 Cor. 9:1-15","Ps. 107:23-32","Pr. 25:18-19"],
+      [261,"Isa. 27:1-28:29","2 Cor. 10:1-18","Ps. 107:33-43","Pr. 25:20"],
+      [262,"Isa. 29:1-24","2 Cor. 11:1-15","Ps. 108:1-6","Pr. 25:21-22"],
+      [263,"Isa. 30:1-32:20","2 Cor. 11:16-33","Ps. 108:7-13","Pr. 25:23-24"],
+      [264,"Isa. 33:1-34:17","2 Cor. 12:1-21","Ps. 109:1-5","Pr. 25:25-26"],
+      [265,"Isa. 35:1-36:22","2 Cor. 13:1-14","Ps. 109:6-13","Pr. 25:27-28"],
+      [266,"Isa. 37:1-38:22","Gal. 1:1-24","Ps. 109:14-20","Pr. 26:1"],
+      [267,"Isa. 39:1-40:31","Gal. 2:1-21","Ps. 109:21-25","Pr. 26:2"],
+      [268,"Isa. 41:1-42:25","Gal. 3:1-29","Ps. 109:26-31","Pr. 26:3-4"],
+      [269,"Isa. 43:1-44:28","Gal. 4:1-31","Ps. 110:1-7","Pr. 26:5-9"],
+      [270,"Isa. 45:1-46:13","Gal. 5:1-26","Ps. 111:1-6","Pr. 26:10"],
+      [271,"Isa. 47:1-48:22","Gal. 6:1-18","Ps. 111:7-10","Pr. 26:11-12"],
+      [272,"Isa. 49:1-50:11","Eph. 1:1-23","Ps. 112:1-4","Pr. 26:13-15"],
+      [273,"Isa. 51:1-52:15","Eph. 2:1-22","Ps. 112:5-10","Pr. 26:16"],
+      [274,"Isa. 53:1-54:17","Eph. 3:1-21","Ps. 113:1-4","Pr. 26:17-19"],
+      [275,"Isa. 55:1-56:12","Eph. 4:1-32","Ps. 113:5-9","Pr. 26:20-21"],
+      [276,"Isa. 57:1-58:14","Eph. 5:1-16","Ps. 114:1-8","Pr. 26:22"],
+      [277,"Isa. 59:1-60:22","Eph. 5:17-33","Ps. 115:1-8","Pr. 26:23"],
+      [278,"Isa. 61:1-62:12","Eph. 6:1-24","Ps. 115:9-13","Pr. 26:24-26"],
+      [279,"Isa. 63:1-64:12","Phil. 1:1-30","Ps. 115:14-18","Pr. 26:27"],
+      [280,"Isa. 65:1-66:24","Phil. 2:1-30","Ps. 116:1-4","Pr. 26:28"],
+    ],
+    milestone: {
+      title: "Day 280 Milestone",
+      text: "Through the prophets and the letters to the Galatians, Ephesians, and Philippians, the Word has confirmed that you are a new creation in Christ. You are seated in heavenly places with Him, chosen for His purpose."
+    }
+  },
+  {
+    segment: "Days 281–320",
+    days: [
+      [281,"Jer. 1:1-2:37","Phil. 3:1-21","Ps. 116:5-14","Pr. 27:1"],
+      [282,"Jer. 3:1-4:31","Phil. 4:1-23","Ps. 116:15-19","Pr. 27:2"],
+      [283,"Jer. 5:1-6:30","Col. 1:1-29","Ps. 117:1-2","Pr. 27:3-4"],
+      [284,"Jer. 7:1-8:22","Col. 2:1-23","Ps. 118:1-4","Pr. 27:5-6"],
+      [285,"Jer. 9:1-10:25","Col. 3:1-25","Ps. 118:5-9","Pr. 27:7"],
+      [286,"Jer. 11:1-12:17","Col. 4:1-18","Ps. 118:10-14","Pr. 27:8"],
+      [287,"Jer. 13:1-14:22","1 Thess. 1:1-10","Ps. 118:15-20","Pr. 27:9"],
+      [288,"Jer. 15:1-16:21","1 Thess. 2:1-20","Ps. 118:21-24","Pr. 27:10"],
+      [289,"Jer. 17:1-18:23","1 Thess. 3:1-13","Ps. 118:25-29","Pr. 27:11-12"],
+      [290,"Jer. 19:1-20:18","1 Thess. 4:1-18","Ps. 119:1-8","Pr. 27:13"],
+      [291,"Jer. 21:1-22:30","1 Thess. 5:1-28","Ps. 119:9-16","Pr. 27:14"],
+      [292,"Jer. 23:1-24:10","2 Thess. 1:1-12","Ps. 119:17-24","Pr. 27:15-16"],
+      [293,"Jer. 25:1-26:24","2 Thess. 2:1-17","Ps. 119:25-32","Pr. 27:17"],
+      [294,"Jer. 27:1-28:17","2 Thess. 3:1-18","Ps. 119:33-40","Pr. 27:18"],
+      [295,"Jer. 29:1-30:24","1 Tim. 1:1-20","Ps. 119:41-48","Pr. 27:19"],
+      [296,"Jer. 31:1-32:44","1 Tim. 2:1-15","Ps. 119:49-56","Pr. 27:20"],
+      [297,"Jer. 33:1-34:22","1 Tim. 3:1-16","Ps. 119:57-64","Pr. 27:21"],
+      [298,"Jer. 35:1-36:32","1 Tim. 4:1-16","Ps. 119:65-72","Pr. 27:22"],
+      [299,"Jer. 37:1-38:28","1 Tim. 5:1-25","Ps. 119:73-80","Pr. 27:23-27"],
+      [300,"Jer. 39:1-40:16","1 Tim. 6:1-21","Ps. 119:81-88","Pr. 28:1"],
+      [301,"Jer. 41:1-42:22","2 Tim. 1:1-18","Ps. 119:89-96","Pr. 28:2"],
+      [302,"Jer. 43:1-44:30","2 Tim. 2:1-26","Ps. 119:97-104","Pr. 28:3"],
+      [303,"Jer. 45:1-46:28","2 Tim. 3:1-17","Ps. 119:105-112","Pr. 28:4"],
+      [304,"Jer. 47:1-48:47","2 Tim. 4:1-22","Ps. 119:113-120","Pr. 28:5"],
+      [305,"Jer. 49:1-50:46","Titus 1:1-16","Ps. 119:121-128","Pr. 28:6"],
+      [306,"Jer. 51:1-52:34","Titus 2:1-15","Ps. 119:129-136","Pr. 28:7-8"],
+      [307,"Lam. 1:1-2:22","Titus 3:1-15","Ps. 119:137-144","Pr. 28:9-10"],
+      [308,"Lam. 3:1-5:22","Philem. 1-25","Ps. 119:145-152","Pr. 28:11"],
+      [309,"Ezek. 1:1-2:10","Heb. 1:1-14","Ps. 119:153-160","Pr. 28:12"],
+      [310,"Ezek. 3:1-4:17","Heb. 2:1-18","Ps. 119:161-168","Pr. 28:13"],
+      [311,"Ezek. 5:1-6:14","Heb. 3:1-19","Ps. 119:169-176","Pr. 28:14"],
+      [312,"Ezek. 7:1-8:18","Heb. 4:1-16","Ps. 120:1-7","Pr. 28:15"],
+      [313,"Ezek. 9:1-10:22","Heb. 5:1-14","Ps. 121:1-8","Pr. 28:16"],
+      [314,"Ezek. 11:1-12:28","Heb. 6:1-20","Ps. 122:1-5","Pr. 28:17-18"],
+      [315,"Ezek. 13:1-14:23","Heb. 7:1-28","Ps. 122:6-9","Pr. 28:19"],
+      [316,"Ezek. 15:1-16:63","Heb. 8:1-13","Ps. 123:1-4","Pr. 28:20"],
+      [317,"Ezek. 17:1-18:32","Heb. 9:1-28","Ps. 124:1-8","Pr. 28:21"],
+      [318,"Ezek. 19:1-20:49","Heb. 10:1-18","Ps. 125:1-5","Pr. 28:22"],
+      [319,"Ezek. 21:1-22:31","Heb. 10:19-39","Ps. 126:1-6","Pr. 28:23"],
+      [320,"Ezek. 23:1-24:27","Heb. 11:1-16","Ps. 127:1-5","Pr. 28:24"],
+    ],
+    milestone: {
+      title: "Day 320 Milestone",
+      text: "The prophecies of Jeremiah and Ezekiel, along with the letters of Hebrews and the pastoral epistles, have shown that God is the one who is faithful to finish the work He began in you. Your hope is fixed on Jesus, the Author and Perfecter of your faith."
+    }
+  },
+  {
+    segment: "Days 321–365",
+    days: [
+      [321,"Ezek. 25:1-26:21","Heb. 11:17-40","Ps. 128:1-6","Pr. 28:25"],
+      [322,"Ezek. 27:1-28:26","Heb. 12:1-29","Ps. 129:1-4","Pr. 28:26"],
+      [323,"Ezek. 29:1-30:26","Heb. 13:1-25","Ps. 129:5-8","Pr. 28:27"],
+      [324,"Ezek. 31:1-32:32","James 1:1-27","Ps. 130:1-4","Pr. 28:28"],
+      [325,"Ezek. 33:1-34:31","James 2:1-26","Ps. 130:5-8","Pr. 29:1"],
+      [326,"Ezek. 35:1-36:38","James 3:1-18","Ps. 131:1-3","Pr. 29:2-3"],
+      [327,"Ezek. 37:1-38:23","James 4:1-17","Ps. 132:1-9","Pr. 29:4"],
+      [328,"Ezek. 39:1-40:49","James 5:1-20","Ps. 132:10-18","Pr. 29:5"],
+      [329,"Ezek. 41:1-42:20","1 Pet. 1:1-25","Ps. 133:1-3","Pr. 29:6"],
+      [330,"Ezek. 43:1-44:31","1 Pet. 2:1-25","Ps. 134:1-3","Pr. 29:7"],
+      [331,"Ezek. 45:1-46:24","1 Pet. 3:1-22","Ps. 135:1-7","Pr. 29:8"],
+      [332,"Ezek. 47:1-48:35","1 Pet. 4:1-19","Ps. 135:8-14","Pr. 29:9"],
+      [333,"Dan. 1:1-2:49","1 Pet. 5:1-14","Ps. 135:15-21","Pr. 29:10"],
+      [334,"Dan. 3:1-4:37","2 Pet. 1:1-21","Ps. 136:1-9","Pr. 29:11"],
+      [335,"Dan. 5:1-6:28","2 Pet. 2:1-22","Ps. 136:10-26","Pr. 29:12-13"],
+      [336,"Dan. 7:1-8:27","2 Pet. 3:1-18","Ps. 137:1-6","Pr. 29:14"],
+      [337,"Dan. 9:1-10:21","1 John 1:1-10","Ps. 137:7-9","Pr. 29:15"],
+      [338,"Dan. 11:1-12:13","1 John 2:1-29","Ps. 138:1-3","Pr. 29:16"],
+      [339,"Hos. 1:1-2:23","1 John 3:1-24","Ps. 138:4-6","Pr. 29:17"],
+      [340,"Hos. 3:1-4:19","1 John 4:1-21","Ps. 138:7-8","Pr. 29:18"],
+      [341,"Hos. 5:1-6:11","1 John 5:1-21","Ps. 139:1-6","Pr. 29:19"],
+      [342,"Hos. 7:1-8:14","2 John 1-13","Ps. 139:7-12","Pr. 29:20"],
+      [343,"Hos. 9:1-10:15","3 John 1-15","Ps. 139:13-16","Pr. 29:21"],
+      [344,"Hos. 11:1-12:14","Jude 1-25","Ps. 139:17-24","Pr. 29:22"],
+      [345,"Hos. 13:1-14:9","Rev. 1:1-20","Ps. 140:1-5","Pr. 29:23"],
+      [346,"Joel 1:1-3:21","Rev. 2:1-29","Ps. 140:6-13","Pr. 29:24"],
+      [347,"Amos 1:1-3:15","Rev. 3:1-22","Ps. 141:1-4","Pr. 29:25"],
+      [348,"Amos 4:1-5:27","Rev. 4:1-11","Ps. 141:5-10","Pr. 29:26"],
+      [349,"Amos 6:1-7:17","Rev. 5:1-14","Ps. 142:1-7","Pr. 29:27"],
+      [350,"Amos 8:1-9:15","Rev. 6:1-17","Ps. 143:1-6","Pr. 30:1-4"],
+      [351,"Obad. 1-21","Rev. 7:1-17","Ps. 143:7-12","Pr. 30:5"],
+      [352,"Jon. 1:1-4:11","Rev. 8:1-13","Ps. 144:1-8","Pr. 30:6-9"],
+      [353,"Mic. 1:1-3:12","Rev. 9:1-21","Ps. 144:9-15","Pr. 30:10"],
+      [354,"Mic. 4:1-5:15","Rev. 10:1-11","Ps. 145:1-9","Pr. 30:11-14"],
+      [355,"Mic. 6:1-7:20","Rev. 11:1-19","Ps. 145:10-16","Pr. 30:15"],
+      [356,"Nah. 1:1-3:19","Rev. 12:1-17","Ps. 145:17-21","Pr. 30:16"],
+      [357,"Hab. 1:1-3:19","Rev. 13:1-18","Ps. 146:1-10","Pr. 30:17"],
+      [358,"Zeph. 1:1-3:20","Rev. 14:1-20","Ps. 147:1-6","Pr. 30:18-19"],
+      [359,"Hag. 1:1-2:23","Rev. 15:1-8","Ps. 147:7-11","Pr. 30:20"],
+      [360,"Zech. 1:1-3:10","Rev. 16:1-21","Ps. 147:12-20","Pr. 30:21-23"],
+      [361,"Zech. 4:1-6:15","Rev. 17:1-18","Ps. 148:1-6","Pr. 30:24-28"],
+      [362,"Zech. 7:1-9:17","Rev. 18:1-24","Ps. 148:7-14","Pr. 30:29-31"],
+      [363,"Zech. 10:1-12:14","Rev. 19:1-21","Ps. 149:1-4","Pr. 30:32-33"],
+      [364,"Zech. 13:1-14:21","Rev. 20:1-15","Ps. 149:5-9","Pr. 31:1-9"],
+      [365,"Mal. 1:1-4:6","Rev. 21:1-22:21","Ps. 150:1-6","Pr. 31:10-31"],
+    ],
+    milestone: {
+      title: "Final Milestone",
+      text: "You have finished the journey from Genesis to Revelation. May the Word you have planted in your heart this year continue to grow and guide you in the days to come.",
+      final: true
+    }
+  }
+];
+
+// STATE
+let checked = {};
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) checked = JSON.parse(saved);
+  } catch(e) { checked = {}; }
+}
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(checked)); } catch(e) {}
+}
+
+function totalChecked() {
+  return Object.values(checked).filter(Boolean).length;
+}
+
+function updateProgress() {
+  const n = totalChecked();
+  const pct = (n / 365 * 100).toFixed(1);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressCount').textContent = n + ' / 365 days';
+}
+
+function toggleDay(dayNum) {
+  checked[dayNum] = !checked[dayNum];
+  saveState();
+  const row = document.getElementById('day-' + dayNum);
+  if (checked[dayNum]) row.classList.add('checked');
+  else row.classList.remove('checked');
+  updateSectionCount(row.closest('.section'));
+  updateProgress();
+}
+
+function updateSectionCount(section) {
+  if (!section) return;
+  const rows = section.querySelectorAll('.day-row');
+  const done = section.querySelectorAll('.day-row.checked').length;
+  const sp = section.querySelector('.section-progress');
+  if (sp) sp.textContent = done + ' / ' + rows.length + ' complete';
+}
+
+function resetAll() {
+  if (!confirm('Reset all progress? This cannot be undone.')) return;
+  checked = {};
+  saveState();
+  document.querySelectorAll('.day-row').forEach(r => r.classList.remove('checked'));
+  document.querySelectorAll('.section-progress').forEach(sp => {
+    const rows = sp.closest('.section').querySelectorAll('.day-row').length;
+    sp.textContent = '0 / ' + rows + ' complete';
+  });
+  updateProgress();
+}
+
+function buildPlan() {
+  const container = document.getElementById('planContainer');
+  plan.forEach(seg => {
+    const sec = document.createElement('div');
+    sec.className = 'section';
+
+    const hdr = document.createElement('div');
+    hdr.className = 'section-header';
+    hdr.innerHTML = `<h2>${seg.segment}</h2><span class="section-progress">0 / ${seg.days.length} complete</span>`;
+    sec.appendChild(hdr);
+
+    seg.days.forEach(d => {
+      const [num, ot, nt, ps, pr] = d;
+      const row = document.createElement('div');
+      row.className = 'day-row' + (checked[num] ? ' checked' : '');
+      row.id = 'day-' + num;
+      row.onclick = () => toggleDay(num);
+      row.innerHTML = `
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="day-text">
+          <span class="day-num">Day ${num}</span>
+          <span class="day-readings">${ot} &nbsp;·&nbsp; ${nt} &nbsp;·&nbsp; ${ps} &nbsp;·&nbsp; ${pr}</span>
+        </div>`;
+      sec.appendChild(row);
+    });
+
+    const m = seg.milestone;
+    const ms = document.createElement('div');
+    ms.className = 'milestone' + (m.final ? ' final-milestone' : '');
+    ms.innerHTML = `<h3>${m.title}</h3><p>${m.text}</p>${m.final ? '<p class="rare">R · A · R · E &nbsp;— Read. Apply. Repeat. Every Day.</p>' : ''}`;
+    sec.appendChild(ms);
+
+    container.appendChild(sec);
+    updateSectionCount(sec);
+  });
+}
+
+loadState();
+buildPlan();
+updateProgress();
+</script>
+</body>
+</html>
